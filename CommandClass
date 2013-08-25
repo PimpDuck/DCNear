@@ -1,0 +1,44 @@
+package me.PimpDuck.DCNear;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class CommandClass extends JavaPlugin implements CommandExecutor
+{	
+    @EventHandler
+	public boolean onCommand(CommandSender sender, Command cmd, String command, String[] args) {
+    	if ((sender instanceof Player))
+    	{
+		Player player = (Player) sender;
+		if(args.length == 0){
+		if(player.hasPermission("DCNear.distance.100") || player.hasPermission("DCNear.*")){
+			Location start_loc = player.getLocation();
+			 for(Entity nearby : player.getNearbyEntities(100,100,100)) {
+			    if(nearby instanceof Player) {
+			        Location end_loc = nearby.getLocation();
+			        int distance = (int) start_loc.distance(end_loc);
+			        if(distance <= 100){
+			        player.sendMessage(ChatColor.GOLD + "Nearby Players: " + ChatColor.WHITE + ((Player) nearby).getName() + "(" + ChatColor.DARK_RED + distance + "m" + ChatColor.WHITE + ")");
+			   }
+			  }
+			}
+		}else{
+			player.sendMessage(ChatColor.DARK_RED + "You don't have permission to do this!");
+		}
+		}
+		if(args.length > 0){
+			player.sendMessage(ChatColor.DARK_RED + "Too many arguments!");
+		}
+	}else{
+		sender.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "Only in game players can use this command!");
+	}
+		return false;
+  }
+}
