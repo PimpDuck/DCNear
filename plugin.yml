@@ -1,0 +1,5 @@
+name: DCNear
+main: me.PimpDuck.DCNear.Main
+version: 1.0
+commands:
+    near:
