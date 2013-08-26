@@ -3,4 +3,5 @@ main: me.PimpDuck.DCNear.Main
 version: 1.0
 commands:
   near:
-    description: Gets the players nearby
+    aliases: [dcnear, dcn]
+    description: Gets nearby players

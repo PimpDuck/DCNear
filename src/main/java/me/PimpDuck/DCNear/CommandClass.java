@@ -20,12 +20,24 @@ public class CommandClass extends JavaPlugin implements CommandExecutor {
             Set<PermissionAttachmentInfo> perms = player.getEffectivePermissions();
             double range = 0;
             for (PermissionAttachmentInfo pai : perms) {
-                if (pai.getPermission().contains("DCNear.distance")) {
+                if (pai.getPermission().toLowerCase().contains("dcnear.distance")) {
                     int len = pai.getPermission().length();
                     range = Double.parseDouble(pai.getPermission().substring(16, len));
+                    if (pai.getValue() == false) {
+                        player.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "You don't have permission to do this!");
+                        return false;
+                    }
+                    break;
                 }
             }
+            if (args.length > 0) {
+                player.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "Too many arguments!");
+                return false;
+            }
             if ((args.length == 0 && range > 0) || player.hasPermission("DCNear.*")) {
+                if (player.hasPermission("DCNear.*" || player.isOp()) {
+                    range = 100;
+                }
                 Location start_loc = player.getLocation();
                 StringBuilder sb = new StringBuilder();
                 for (Entity nearby : player.getNearbyEntities(range, range, range)) {
@@ -42,13 +54,6 @@ public class CommandClass extends JavaPlugin implements CommandExecutor {
                     message = "none";
                 }
                 player.sendMessage(ChatColor.GOLD + "Players nearby: " + ChatColor.WHITE + message);
-            } else {
-                player.sendMessage(ChatColor.DARK_RED + "You don't have permission to do this!");
-                return false;
-            }
-            if (args.length > 0) {
-                player.sendMessage(ChatColor.DARK_RED + "Too many arguments!");
-                return false;
             }
         } else {
             sender.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "Only in game players can use this command!");
