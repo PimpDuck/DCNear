@@ -35,7 +35,7 @@ public class CommandClass extends JavaPlugin implements CommandExecutor {
                 return false;
             }
             if ((args.length == 0 && range > 0) || player.hasPermission("DCNear.*")) {
-                if (player.hasPermission("DCNear.*" || player.isOp()) {
+                if (player.hasPermission("DCNear.*") || player.isOp()) {
                     range = 100;
                 }
                 Location start_loc = player.getLocation();
