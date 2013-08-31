@@ -4,12 +4,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-    private CommandClass commandclass;
-
     @Override
     public void onEnable() {
-        commandclass = new CommandClass();
-        getCommand("near").setExecutor(commandclass);
+        saveDefaultConfig();
+        getCommand("near").setExecutor(new CommandClass(this));
     }
 
     @Override
