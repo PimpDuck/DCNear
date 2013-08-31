@@ -3,13 +3,24 @@ main: me.PimpDuck.DCNear.Main
 version: 1.0
 commands:
   near:
-    aliases: [dcnear, dcn]
     description: Gets nearby players
     permission: dcnear.default
 permissions:
   dcnear.default:
     default: op
     description: Allow players to use the /near command
+  dcnear.god
+    default: op
+    description: Allows god ranks to see the ammount of blocks you've specified
+  dcnear.ub3r
+    default: op
+    description: Allows ub3r ranks to see the ammount of blocks you've specified
+  dcnear.legend
+    default: op
+    description: Allows legend ranks to see the ammount of blocks you've specified
+  dcnear.super
+    default: op
+    description: Allows super ranks to see the ammount of blocks you've specified
   dcnear.*:
     default: op
     description: Allow players to use the /near [distance] command
