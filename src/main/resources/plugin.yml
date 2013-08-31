@@ -5,3 +5,13 @@ commands:
   near:
     aliases: [dcnear, dcn]
     description: Gets nearby players
+    permission: dcnear.default
+permissions:
+  dcnear.default:
+    default: op
+    description: Allow players to use the /near command
+  dcnear.*:
+    default: op
+    description: Allow players to use the /near [distance] command
+    children:
+      dcnear.default: true
