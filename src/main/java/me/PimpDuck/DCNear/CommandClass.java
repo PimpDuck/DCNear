@@ -35,16 +35,8 @@ public class CommandClass extends JavaPlugin implements CommandExecutor {
                         return false;
                     }
                 }
-                if ((args.length == 0) && player.hasPermission("dcnear.god")) {
+                if (args.length == 0) {
                     range = this.getConfig().getDouble("god");
-                }else if((args.length == 0) && player.hasPermission("dcnear.ub3r")){
-                	range = this.getConfig().getDouble("ub3r");
-                }else if((args.length == 0) && player.hasPermission("dcnear.legend")){
-                	range = this.getConfig().getDouble("legend");
-                }else if((args.length == 0) && player.hasPermission("dcnear.super")){
-                	range = this.getConfig().getDouble("super");
-                }else if(!(player.hasPermission("dcnear.god") || player.hasPermission("dcnear.ub3r") || player.hasPermission("dcnear.legend") || player.hasPermission("dcnear.super"))){
-                	player.sendMessage(ChatColor.DARK_RED + "You don't have permission to do this!");
                 }
                 if (range != 0) {
                     Location start_loc = player.getLocation();
