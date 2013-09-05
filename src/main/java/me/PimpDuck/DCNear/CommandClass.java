@@ -25,9 +25,9 @@ public class CommandClass implements CommandExecutor {
         if ((sender instanceof Player)) {
             Player player = (Player) sender;
             double range = 0;
-            if (player.hasPermission("dcnear.default") || player.hasPermission("dcnear.*")) {
+            if (player.hasPermission("dcnear.god") || player.hasPermission("dcnear.ub3r") || player.hasPermission("dcnear.legend") || player.hasPermission("dcnear.super") || player.hasPermission("dcnear.*")) {
 
-                if (args.length > 1) {
+                if (args.length > 1 ) {
                     player.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "Too many arguments!");
                     return false;
                 }
@@ -39,8 +39,17 @@ public class CommandClass implements CommandExecutor {
                         return false;
                     }
                 }
-                if (args.length == 0) {
+                if (args.length == 0 && player.hasPermission("dcnear.god")) {
                     range = this.plugin.getConfig().getDouble("god");
+                }
+                if(args.length == 0 && player.hasPermission("dcnear.ub3r")){
+                    range = this.plugin.getConfig().getDouble("ub3r");
+                }
+                if(args.length == 0 && player.hasPermission("dcnear.legend")){
+                    range = this.plugin.getConfig().getDouble("legend");
+                }
+                if(args.length == 0 && player.hasPermission("dcnear.super")){
+                    range = this.plugin.getConfig().getDouble("super");	
                 }
 
                 if (range != 0) {
