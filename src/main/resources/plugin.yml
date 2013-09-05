@@ -2,15 +2,27 @@ name: DCNear
 main: me.PimpDuck.DCNear.Main
 version: 1.0
 commands:
-  near:
+  dcnear:
     description: Gets nearby players
-    permission: dcnear.default
+    permission: dcnear.god 
 permissions:
-  dcnear.default:
+  dcnear.god:
     default: op
-    description: Allow players to use the /near command
+    description: Allow players to use the /dcnear command for GOD's distance
+  dcnear.ub3r:
+    default: op
+    description: Allow players to use the /dcnear command for Ub3r's distance
+  dcnear.legend:
+    default: op
+    description: Allow players to use the /dcnear command for Legend's distance
+  dcnear.super:
+    default: op
+    description: Allow players to use the /dcnear command for Super's distance
   dcnear.*:
     default: op
-    description: Allow players to use the /near [distance] command
+    description: Allow players to use the /dcnear [distance] command
     children:
-      dcnear.default: true
+      dcnear.god: true
+      dcnear.ub3r: true
+      dcnear.legend: true
+      dcnear.super: true
