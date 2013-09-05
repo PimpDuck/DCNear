@@ -4,20 +4,23 @@ import java.util.logging.Logger;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin {
 
-	Logger log = Logger.getLogger("Minecraft");
-	CommandClass commandclass;
+
+public class Main extends JavaPlugin{
+
+	  private CommandClass CommandClass = new CommandClass(this);
 	
-    @Override
-    public void onEnable() {
-    	log.info("[DCNear] has been enabled!");
-        saveDefaultConfig();
-        getCommand("near").setExecutor(commandclass);
-    }
+	Logger log = Logger.getLogger("Minecraft");
+	
+	@Override
+	public void onEnable(){
+		log.info("[DCNear] has been enabled!");
+		saveDefaultConfig();
+        getCommand("dcnear").setExecutor(this.CommandClass);
 
-    @Override
-    public void onDisable() {
-    	log.info("[DCNear] has been disabled!");
-    }
+	}
+	@Override
+	public void onDisable(){
+		log.info("[DCNear] has been disabled!");	
+	}
 }
