@@ -1,5 +1,7 @@
 package me.PimpDuck.DCNear;
 
+
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -7,22 +9,24 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class CommandClass extends JavaPlugin implements CommandExecutor {
+public class CommandClass implements CommandExecutor {
 
-    Main plugin;
+	  private Main plugin;
 
-    public CommandClass(Main plugin) {
-        this.plugin = plugin;
-    }
-
+	  public CommandClass(Main instance)
+	  {
+	    this.plugin = instance;
+	  }
+	
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String command, String[] args) {
+    	if(cmd.getName().equalsIgnoreCase("dcnear")){
         if ((sender instanceof Player)) {
             Player player = (Player) sender;
             double range = 0;
             if (player.hasPermission("dcnear.default") || player.hasPermission("dcnear.*")) {
+
                 if (args.length > 1) {
                     player.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "Too many arguments!");
                     return false;
@@ -36,8 +40,9 @@ public class CommandClass extends JavaPlugin implements CommandExecutor {
                     }
                 }
                 if (args.length == 0) {
-                    range = this.getConfig().getDouble("god");
+                    range = this.plugin.getConfig().getDouble("god");
                 }
+
                 if (range != 0) {
                     Location start_loc = player.getLocation();
                     StringBuilder sb = new StringBuilder();
@@ -64,6 +69,8 @@ public class CommandClass extends JavaPlugin implements CommandExecutor {
         } else {
             sender.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "Only in game players can use this command!");
             return false;
+        }
+        return true;
         }
         return false;
     }
