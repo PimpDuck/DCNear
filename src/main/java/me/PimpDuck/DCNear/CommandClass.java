@@ -2,6 +2,8 @@ package me.PimpDuck.DCNear;
 
 
 
+import java.util.*;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -12,6 +14,8 @@ import org.bukkit.entity.Player;
 
 public class CommandClass implements CommandExecutor {
 
+	List<String> nearby = new ArrayList<String>();
+	
 	  private Main plugin;
 
 	  public CommandClass(Main instance)
@@ -27,7 +31,7 @@ public class CommandClass implements CommandExecutor {
             double range = 0;
             if (player.hasPermission("dcnear.god") || player.hasPermission("dcnear.ub3r") || player.hasPermission("dcnear.legend") || player.hasPermission("dcnear.super") || player.hasPermission("dcnear.*")) {
 
-                if (args.length > 1 ) {
+                if (args.length > 1) {
                     player.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "Too many arguments!");
                     return false;
                 }
@@ -55,21 +59,21 @@ public class CommandClass implements CommandExecutor {
                 if (range != 0) {
                     Location start_loc = player.getLocation();
                     StringBuilder sb = new StringBuilder();
-                    for (Entity nearby : player.getNearbyEntities(range, range, range)) {
-                        if (nearby instanceof Player) {
-                            Location end_loc = nearby.getLocation();
-                            int distance = (int) start_loc.distance(end_loc);
-                            sb.append(((Player) nearby).getName()).append(" (").append(ChatColor.DARK_RED).append(distance).append("m").append(ChatColor.WHITE).append("), ");
-                        }
-                        String message;
-                        if (sb.length() > 0) {
-                            message = sb.toString().substring(0, (sb.length() - 2));
-                        } else {
-                            message = "none";
-                        }
-                        player.sendMessage(ChatColor.GOLD + "Players nearby: " + ChatColor.WHITE + message);
+                    for (Entity nearbyEntity : player.getNearbyEntities(range, range, range)) {
+                    	if (nearbyEntity instanceof Player) {
+                    	nearby.add(((Player) nearbyEntity).getName());
+                    	Location end_loc = nearbyEntity.getLocation();
+                    	int distance = (int) start_loc.distance(end_loc); //Unnecessary unless you want to save distance
+                        sb.append(((Player) nearbyEntity).getName()).append(" (").append(ChatColor.DARK_RED).append(distance).append("m").append(ChatColor.WHITE).append("), ");
+                    	}
+                    	}
+                    String message;
+                    if (sb.length() > 0) {
+                        message = sb.toString().substring(0, (sb.length() - 2));
+                    } else {
+                        message = "none";
                     }
-                    return true;
+                    player.sendMessage(ChatColor.GOLD + "Players nearby: " + ChatColor.WHITE + message);
                 }
             } else {
                 sender.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "You do not have permission use this command!");
