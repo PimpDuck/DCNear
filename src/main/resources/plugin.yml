@@ -4,7 +4,6 @@ version: 1.0
 commands:
   dcnear:
     description: Gets nearby players
-    permission: dcnear.god 
 permissions:
   dcnear.god:
     default: op
