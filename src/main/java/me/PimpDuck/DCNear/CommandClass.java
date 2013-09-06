@@ -53,7 +53,9 @@ public class CommandClass implements CommandExecutor {
                     range = this.plugin.getConfig().getDouble("legend");
                 }
                 if(args.length == 0 && player.hasPermission("dcnear.super")){
+                	if(range < this.plugin.getConfig().getDouble("super")){
                     range = this.plugin.getConfig().getDouble("super");	
+                	}
                 }
 
                 if (range != 0) {
@@ -63,7 +65,7 @@ public class CommandClass implements CommandExecutor {
                     	if (nearbyEntity instanceof Player) {
                     	nearby.add(((Player) nearbyEntity).getName());
                     	Location end_loc = nearbyEntity.getLocation();
-                    	int distance = (int) start_loc.distance(end_loc); //Unnecessary unless you want to save distance
+                    	int distance = (int) start_loc.distance(end_loc);
                         sb.append(((Player) nearbyEntity).getName()).append(" (").append(ChatColor.DARK_RED).append(distance).append("m").append(ChatColor.WHITE).append("), ");
                     	}
                     	}
