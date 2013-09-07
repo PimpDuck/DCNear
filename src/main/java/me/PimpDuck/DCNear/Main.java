@@ -9,14 +9,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin{
 
 	  private CommandClass CommandClass = new CommandClass(this);
-	
+
 	Logger log = Logger.getLogger("Minecraft");
-	
+
 	@Override
 	public void onEnable(){
 		log.info("[DCNear] has been enabled!");
+        log.info("Copyright 2013 PimpDuck All rights reserved.");
 		saveDefaultConfig();
-        getCommand("dcnear").setExecutor(this.CommandClass);
+        getCommand("near").setExecutor(this.CommandClass);
 
 	}
 	@Override
