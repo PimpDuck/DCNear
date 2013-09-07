@@ -1,4 +1,3 @@
-
 package me.PimpDuck.DCNear;
 
 
@@ -12,31 +11,31 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class CommandClass implements CommandExecutor {
-	
+
 	private Main plugin;
-	
+
 	public CommandClass(Main instance)
 	{
 		this.plugin = instance;
 	}
-	
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String command, String[] args) {
-		if(cmd.getName().equalsIgnoreCase("dcnear")){
+		if(cmd.getName().equalsIgnoreCase("near")){
 			if ((sender instanceof Player)) {
 				Player player = (Player) sender;
 				double range = 0;
 				if (player.hasPermission("dcnear.god") || player.hasPermission("dcnear.ub3r") || player.hasPermission("dcnear.legend") || player.hasPermission("dcnear.super") || player.hasPermission("dcnear.*")) {
-					
+
 					if (args.length > 1) {
-						player.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "Too many arguments!");
+						player.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.RED + "Too many arguments!");
 						return false;
 					}
 					if (args.length == 1 && player.hasPermission("dcnear.*")) {
 						try {
 							range = Double.parseDouble(args[0]);
 						} catch (NumberFormatException nfe) {
-							player.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "Argument must be a number!");
+							player.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.RED + "Argument must be a number!");
 							return false;
 						}
 					}
@@ -50,11 +49,9 @@ public class CommandClass implements CommandExecutor {
 						range = this.plugin.getConfig().getDouble("legend");
 					}
 					if(args.length == 0 && player.hasPermission("dcnear.super")){
-						if(range < this.plugin.getConfig().getDouble("super")){
 							range = this.plugin.getConfig().getDouble("super");	
-						}
 					}
-					
+
 					if (range != 0) {
 						Location start_loc = player.getLocation();
 						StringBuilder sb = new StringBuilder();
@@ -62,7 +59,7 @@ public class CommandClass implements CommandExecutor {
 							if (nearbyEntity instanceof Player) {
 								Location end_loc = nearbyEntity.getLocation();
 								int distance = (int) start_loc.distance(end_loc);
-								
+
 								if(distance <= range){
 									sb.append(((Player) nearbyEntity).getName()).append(" (").append(ChatColor.DARK_RED).append(distance).append("m").append(ChatColor.WHITE).append("), ");
 								}
@@ -77,11 +74,11 @@ public class CommandClass implements CommandExecutor {
 						player.sendMessage(ChatColor.GOLD + "Players nearby: " + ChatColor.WHITE + message);
 					}
 				} else {
-					sender.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "You do not have permission use this command!");
+					sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.RED + "You do not have permission use this command!");
 					return false;
 				}
 			} else {
-				sender.sendMessage(ChatColor.DARK_BLUE + "[DCNear] " + ChatColor.DARK_RED + "Only in game players can use this command!");
+				sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.DARK_RED + "Only in game players can use this command!");
 				return false;
 			}
 			return true;
