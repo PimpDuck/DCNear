@@ -1,4 +1,13 @@
+#DCNear ~ Created by PimpDuck#
+#Cooldown is in minutes#
+
 god: 175
+
 ub3r: 150
+
 legend: 125
+
 super: 100
+
+options:
+  cooldown: 6
