@@ -23,12 +23,9 @@ public class Main extends JavaPlugin{
 		log.info("[DCNear] has been enabled!");
         log.info("Copyright 2013 PimpDuck All rights reserved.");
 		saveDefaultConfig();
-		
         configurationFile = new FileManager(this, "config.yml");
-
         delayedPlayers = new HashMap<String, Long>();
         delay = configurationFile.getInt("options.cooldown");
-		
         getCommand("near").setExecutor(this.CommandClass);
 	}
 	@Override
