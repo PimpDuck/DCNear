@@ -15,50 +15,61 @@ public class CommandClass implements CommandExecutor {
 
 	public CommandClass(Main instance)
 	{
-		this.plugin = instance;
+		plugin = instance;
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String command, String[] args) {
-		if(cmd.getName().equalsIgnoreCase("near")){
+    if(cmd.getName().equalsIgnoreCase("near")){
+		Player player = (Player) sender;
 			if ((sender instanceof Player)) {
-				Player player = (Player) sender;
-				double range = 0;
 				
 		          if (args.length > 0)
 		          {
-		            if (args[0].equalsIgnoreCase("info")) {
-		            	player.sendMessage(ChatColor.RED + "===========" + ChatColor.BLUE + "[ " + ChatColor.AQUA + "Diamcraft Near" + ChatColor.BLUE + " ]" + ChatColor.RED + "===========");
+		            if (args[0].equalsIgnoreCase("help")) {
+		            	player.sendMessage(ChatColor.RED + "=============" + ChatColor.BLUE + "[ " + ChatColor.AQUA + "Diamcraft Near" + ChatColor.BLUE + " ]" + ChatColor.RED + "=============");
 		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "(/near) shows who's near you.");
 		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "(/near info) shows you this page of course. :P");
-		            	player.sendMessage(ChatColor.RED + "------------------------" + ChatColor.GOLD + "Ranks" + ChatColor.RED + "------------------------");
-		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "GOD ranks distance is set to " + this.plugin.getConfig().getInt("god") + " blocks.");
-		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "UB3R ranks distance is set to " + this.plugin.getConfig().getInt("ub3r") + " blocks.");
-		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "Legend ranks distance is set to " + this.plugin.getConfig().getInt("legend") + " blocks.");
-		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "Super ranks distance is set to " + this.plugin.getConfig().getInt("super") + " blocks.");
-		            	player.sendMessage(ChatColor.RED + "==================================");
+		            	player.sendMessage(ChatColor.RED + "------------------" + ChatColor.GOLD + "Ranks" + ChatColor.RED + "------------------");
+		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "GOD ranks distance is set to " + plugin.getConfig().getInt("distance.god") + " blocks.");
+		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "UB3R ranks distance is set to " + plugin.getConfig().getInt("distace.ub3r") + " blocks.");
+		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "Legend ranks distance is set to " + plugin.getConfig().getInt("distance.legend") + " blocks.");
+		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "Super ranks distance is set to " + plugin.getConfig().getInt("distance.super") + " blocks.");
+		            	player.sendMessage(ChatColor.BLACK + "* " + ChatColor.GOLD + "The cooldown is currently set to " + plugin.getConfig().getString("options.cooldown") + "minutes");
+		            	player.sendMessage(ChatColor.RED + "=========================================");
+						return false;
 		            }
+		            if(args[0].equalsIgnoreCase("reload")){
+		            	if(player.hasPermission("dcnear.reload") || player.hasPermission("dcnear.*")){
+		            	plugin.reloadConfig();
+		                player.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.GOLD + "Configuration Reloaded!");
+		                return false;
+		            }else{
+		            	player.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.RED + "You don't have permission to do this!");
+		            }
+		           }
 		          }
 		          
+		          if(args.length > 0 && !args[0].equalsIgnoreCase("help")){
+		        	  player.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.DARK_RED + "Too many arguments!");
+		        	  return false;
+		          }
+		          
+				double range = 0;
 		          if (Main.playerDelayed(player))
-					{ //The player is delayed
+					{
 						if(Main.getRemainingTime(player) < 1)
-						{ //The delay is over
+						{
 			                Main.removeDelayedPlayer(player);
 						}else
-						{ //The delay isn't over
+						{
 							int remaining = Main.getRemainingTime(player);
 							String minutes = remaining == 1 ? " minute" : " minutes";
 							player.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.GOLD + ("You must wait " + remaining + minutes + " before using /near again!"));
 							return false;
 						}
 					}
-				
 				if (player.hasPermission("dcnear.god") || player.hasPermission("dcnear.ub3r") || player.hasPermission("dcnear.legend") || player.hasPermission("dcnear.super") || player.hasPermission("dcnear.*")) {
-					if(args.length > 0 && !args[0].equalsIgnoreCase("info")){
-						player.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.RED + "Too many arguments!");
-					}
-					
 					if (args.length == 1 && player.hasPermission("dcnear.*")) {
 						try {
 							range = Double.parseDouble(args[0]);
@@ -68,22 +79,21 @@ public class CommandClass implements CommandExecutor {
 						}
 					}
 					if (args.length == 0 && player.hasPermission("dcnear.god")) {
-						range = this.plugin.getConfig().getDouble("god");	
+						range = plugin.getConfig().getDouble("god");	
 						Main.addDelayedPlayer(player);
 					}
 					if(args.length == 0 && player.hasPermission("dcnear.ub3r")){
-						range = this.plugin.getConfig().getDouble("ub3r");
+						range = plugin.getConfig().getDouble("ub3r");
 						Main.addDelayedPlayer(player);
 					}
 					if(args.length == 0 && player.hasPermission("dcnear.legend")){
-						range = this.plugin.getConfig().getDouble("legend");
+						range = plugin.getConfig().getDouble("legend");
 						Main.addDelayedPlayer(player);
 					}
 					if(args.length == 0 && player.hasPermission("dcnear.super")){
-							range = this.plugin.getConfig().getDouble("super");
+							range = plugin.getConfig().getDouble("super");
 							Main.addDelayedPlayer(player);
 					}
-
 					if (range != 0) {
 						Location start_loc = player.getLocation();
 						StringBuilder sb = new StringBuilder();
@@ -106,11 +116,11 @@ public class CommandClass implements CommandExecutor {
 						player.sendMessage(ChatColor.GOLD + "Players nearby: " + ChatColor.WHITE + message);
 					}
 				} else {
-					sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.RED + "You do not have permission use this command!");
-					return false;
+					player.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.RED + "You are not a high enough rank to do this! Do /near help for more information.");
+					return true;
 				}
 			} else {
-				sender.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.DARK_RED + "Only in game players can use this command!");
+				player.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.DARK_RED + "Only in game players can use this command!");
 				return false;
 			}
 			return true;
