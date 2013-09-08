@@ -65,7 +65,9 @@ public class CommandClass implements CommandExecutor {
 						{
 							int remaining = Main.getRemainingTime(player);
 							String minutes = remaining == 1 ? " minute" : " minutes";
-							player.sendMessage(ChatColor.WHITE + "[" + ChatColor.AQUA + "DC" + ChatColor.RED + "Near" + ChatColor.WHITE + "] " + ChatColor.GOLD + ("You must wait " + remaining + minutes + " before using /near again!"));
+							String prefix = plugin.getConfig().getString("chat-prefix");
+							prefix = ChatColor.translateAlternateColorCodes('§', prefix);
+							player.sendMessage(prefix + " " + ChatColor.GOLD + ("You must wait " + remaining + minutes + " before using /near again!"));
 							return false;
 						}
 					}
@@ -79,19 +81,19 @@ public class CommandClass implements CommandExecutor {
 						}
 					}
 					if (args.length == 0 && player.hasPermission("dcnear.god")) {
-						range = plugin.getConfig().getDouble("god");	
+						range = plugin.getConfig().getDouble("distance.god");	
 						Main.addDelayedPlayer(player);
 					}
 					if(args.length == 0 && player.hasPermission("dcnear.ub3r")){
-						range = plugin.getConfig().getDouble("ub3r");
+						range = plugin.getConfig().getDouble("distance.ub3r");
 						Main.addDelayedPlayer(player);
 					}
 					if(args.length == 0 && player.hasPermission("dcnear.legend")){
-						range = plugin.getConfig().getDouble("legend");
+						range = plugin.getConfig().getDouble("distance.legend");
 						Main.addDelayedPlayer(player);
 					}
 					if(args.length == 0 && player.hasPermission("dcnear.super")){
-							range = plugin.getConfig().getDouble("super");
+							range = plugin.getConfig().getDouble("distance.super");
 							Main.addDelayedPlayer(player);
 					}
 					if (range != 0) {
