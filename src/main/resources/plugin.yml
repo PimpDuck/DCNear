@@ -20,6 +20,9 @@ permissions:
   dcnear.*:
     default: op
     description: Allow players to use the /dcnear [distance] command
+  dcnear.reload:
+    default: op
+    description: Allow players to reload the config
     children:
       dcnear.god: true
       dcnear.ub3r: true
