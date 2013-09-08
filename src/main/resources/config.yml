@@ -1,13 +1,16 @@
 #DCNear ~ Created by PimpDuck#
 #Cooldown is in minutes#
 
-god: 175
+chat-prefix: [Diamcraft]
 
-ub3r: 150
+distance:
+  god: 175
 
-legend: 125
+  ub3r: 150
 
-super: 100
+  legend: 125
+
+  super: 100
 
 options:
   cooldown: 6
