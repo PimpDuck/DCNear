@@ -17,14 +17,15 @@ permissions:
   dcnear.super:
     default: op
     description: Allow players to use the /dcnear command for Super's distance
-  dcnear.*:
-    default: op
-    description: Allow players to use the /dcnear [distance] command
   dcnear.reload:
     default: op
     description: Allow players to reload the config
+  dcnear.*:
+    default: op
+    description: Allow players to use the /dcnear [distance] command
     children:
       dcnear.god: true
       dcnear.ub3r: true
       dcnear.legend: true
       dcnear.super: true
+      dcnear.reload: true
