@@ -12,8 +12,8 @@ public class Main extends JavaPlugin{
 	  private CommandClass CommandClass = new CommandClass(this);
 
 	Logger log = Logger.getLogger("Minecraft");
-	
-	  
+
+
 	  public static FileManager configurationFile;
 	  public static HashMap<String, Long> delayedPlayers;
 	  private static int delay;
@@ -25,14 +25,14 @@ public class Main extends JavaPlugin{
 		saveDefaultConfig();
         configurationFile = new FileManager(this, "config.yml");
         delayedPlayers = new HashMap<String, Long>();
-        delay = configurationFile.getInt("options.cooldown");
+        delay = getConfig().getInt("DCNear.Options.Cooldown");
         getCommand("near").setExecutor(this.CommandClass);
 	}
 	@Override
 	public void onDisable(){
 		log.info("[DCNear] has been disabled!");	
 	}
-	
+
 	  public static void addDelayedPlayer(Player player) {
 		    delayedPlayers.put(player.getName(), System.currentTimeMillis());
 		  }
@@ -56,5 +56,5 @@ public class Main extends JavaPlugin{
 		  public static int getRemainingTime(Player player) {
 		    return (int)(getDelay(1) - (System.currentTimeMillis() - getPlayerDelay(player).longValue()) / 1000L / 60);
 		  }
-	
+
 }
